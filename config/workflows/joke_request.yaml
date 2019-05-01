@@ -1,0 +1,29 @@
+framework:
+    workflows:
+        joke_request:
+            type: "state_machine"
+            supports:
+                - App\Entity\JokeRequest
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'status'
+            initial_place: !php/const App\Entity\JokeRequest::STATUS_NEW
+            places:
+                - !php/const App\Entity\JokeRequest::STATUS_NEW
+                - !php/const App\Entity\JokeRequest::STATUS_JOKE_CHOOSEN
+                - !php/const App\Entity\JokeRequest::STATUS_EMAIL_SENDED
+                - !php/const App\Entity\JokeRequest::STATUS_ERROR
+            transitions:
+                joke_choosen:
+                    from: !php/const App\Entity\JokeRequest::STATUS_NEW
+                    to: !php/const App\Entity\JokeRequest::STATUS_JOKE_CHOOSEN
+                email_sended:
+                    from: !php/const App\Entity\JokeRequest::STATUS_JOKE_CHOOSEN
+                    to: !php/const App\Entity\JokeRequest::STATUS_EMAIL_SENDED
+                error:
+                    from:
+                        - !php/const App\Entity\JokeRequest::STATUS_NEW
+                        - !php/const App\Entity\JokeRequest::STATUS_JOKE_CHOOSEN
+                    to: !php/const App\Entity\JokeRequest::STATUS_ERROR
+

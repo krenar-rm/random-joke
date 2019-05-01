@@ -1,0 +1,6 @@
+joke_request_form:
+    path: /
+    controller: App\Controller\JokeRequestController::buildForm
+joke_request_submit:
+    path: /submit
+    controller: App\Controller\JokeRequestController::submit
